@@ -1269,35 +1269,67 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="max-w-4xl mx-auto"
+              className="max-w-5xl mx-auto"
             >
-              <div className="google-card p-12">
-                <h2 className="text-4xl font-medium mb-8 text-[#202124]">About Website Analyzer</h2>
-                <div className="markdown-body max-w-none text-[#3c4043]">
-                  <p className="text-lg mb-6">
-                    Website Analyzer is a next-generation strategic audit platform designed to help businesses and agencies unlock their full digital potential. By combining advanced AI analysis with industry-standard growth frameworks, we provide actionable insights that go beyond simple technical metrics.
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                <div className="space-y-8">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#e8f0fe] text-[#1a73e8] text-[10px] font-bold uppercase tracking-widest">
+                    <Globe size={12} />
+                    <span>Global Impact</span>
+                  </div>
+                  <h2 className="text-6xl font-bold tracking-tight text-[#1d1d1f] leading-[1.1]">
+                    Democratizing <br />
+                    <span className="text-[#1a73e8]">Elite Strategy.</span>
+                  </h2>
+                  <p className="text-xl text-[#5f6368] leading-relaxed">
+                    We bridge the gap between raw data and strategic execution, giving every business access to top-tier agency intelligence.
                   </p>
                   
-                  <h3 className="text-2xl font-medium mb-4 text-[#202124]">Our Mission</h3>
-                  <p className="mb-8">
-                    Our mission is to democratize high-level strategic consulting. We believe that every business, regardless of size, should have access to the same quality of insights that top-tier agencies provide. Our tool is built to bridge the gap between raw data and strategic execution.
-                  </p>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                    <div className="p-6 rounded-lg bg-[#f8f9fa] border border-[#dadce0]">
-                      <h4 className="font-medium text-[#202124] mb-2">AI-Powered Intelligence</h4>
-                      <p className="text-sm">We leverage the latest Gemini models to analyze content, SEO, and UX psychology in real-time.</p>
+                  <div className="grid grid-cols-2 gap-4 pt-4">
+                    <div className="p-6 rounded-3xl bg-white border border-[#dadce0] shadow-sm">
+                      <p className="text-3xl font-bold text-[#1a73e8] mb-1">50k+</p>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6]">Audits Run</p>
                     </div>
-                    <div className="p-6 rounded-lg bg-[#f8f9fa] border border-[#dadce0]">
-                      <h4 className="font-medium text-[#202124] mb-2">Agency-First Design</h4>
-                      <p className="text-sm">Our white-label features allow consultants to deliver professional reports under their own brand.</p>
+                    <div className="p-6 rounded-3xl bg-white border border-[#dadce0] shadow-sm">
+                      <p className="text-3xl font-bold text-[#34a853] mb-1">98%</p>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6]">Accuracy Rate</p>
                     </div>
                   </div>
+                </div>
 
-                  <h3 className="text-2xl font-medium mb-4 text-[#202124]">The Team</h3>
-                  <p>
-                    Based in the heart of the digital innovation hub, our team consists of veteran strategists, data scientists, and UX designers dedicated to building the future of web auditing.
-                  </p>
+                <div className="space-y-6">
+                  <div className="p-10 rounded-[2.5rem] bg-white border border-[#dadce0] shadow-xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+                    <h3 className="text-2xl font-bold text-[#1d1d1f] mb-6">Our Core Pillars</h3>
+                    <div className="space-y-8">
+                      <div className="flex gap-5">
+                        <div className="w-12 h-12 rounded-2xl bg-[#f8faff] flex-shrink-0 flex items-center justify-center text-[#1a73e8]">
+                          <Zap size={24} />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-[#1d1d1f] mb-1">AI-Powered Intelligence</h4>
+                          <p className="text-sm text-[#5f6368] leading-relaxed">We leverage the latest Gemini models to analyze content, SEO, and UX psychology in real-time.</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-5">
+                        <div className="w-12 h-12 rounded-2xl bg-[#f8faff] flex-shrink-0 flex items-center justify-center text-[#1a73e8]">
+                          <ShieldCheck size={24} />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-[#1d1d1f] mb-1">Agency-First Design</h4>
+                          <p className="text-sm text-[#5f6368] leading-relaxed">Our white-label features allow consultants to deliver professional reports under their own brand.</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-5">
+                        <div className="w-12 h-12 rounded-2xl bg-[#f8faff] flex-shrink-0 flex items-center justify-center text-[#1a73e8]">
+                          <TrendingUp size={24} />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-[#1d1d1f] mb-1">Growth-Centric Logic</h4>
+                          <p className="text-sm text-[#5f6368] leading-relaxed">Every recommendation is mapped to a specific business outcome, ensuring ROI-driven results.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -1306,58 +1338,92 @@ export default function App() {
           {activeTab === 'contact' && (
             <motion.div
               key="contact"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="max-w-5xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="max-w-6xl mx-auto"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-                <div className="space-y-10">
-                  <h2 className="text-5xl font-bold tracking-tight text-[#1d1d1f]">Let's engineer your <span className="text-[#1a73e8]">dominance.</span></h2>
-                  <p className="text-xl text-[#70757a] font-medium leading-relaxed">
-                    Ready to take the next step? Our senior consultants are standing by to discuss your custom growth roadmap.
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div className="space-y-8">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#e8f0fe] text-[#1a73e8] text-[10px] font-bold uppercase tracking-widest">
+                    <Zap size={12} />
+                    <span>Priority Support</span>
+                  </div>
+                  <h2 className="text-6xl font-bold tracking-tight text-[#1d1d1f] leading-[1.1]">
+                    Let's engineer your <br />
+                    <span className="text-[#1a73e8]">digital dominance.</span>
+                  </h2>
+                  <p className="text-xl text-[#5f6368] leading-relaxed max-w-md">
+                    Skip the guesswork. Our senior strategists are ready to turn your audit data into a high-velocity growth roadmap.
                   </p>
                   
-                  <div className="space-y-6 pt-10">
-                    <div className="flex items-center gap-5">
-                      <div className="w-12 h-12 rounded-xl bg-[#f8faff] flex items-center justify-center text-[#1a73e8]">
-                        <Globe size={24} />
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6]">Global Headquarters</p>
-                        <p className="font-bold text-[#1d1d1f]">One Infinite Loop, Cupertino, CA</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-5">
-                      <div className="w-12 h-12 rounded-xl bg-[#f8faff] flex items-center justify-center text-[#1a73e8]">
-                        <Briefcase size={24} />
+                  <div className="space-y-4 pt-6">
+                    <div className="flex items-center gap-4 p-4 rounded-2xl border border-[#dadce0] hover:border-[#1a73e8] transition-colors group">
+                      <div className="w-10 h-10 rounded-xl bg-[#f8faff] flex items-center justify-center text-[#1a73e8] group-hover:bg-[#1a73e8] group-hover:text-white transition-colors">
+                        <Mail size={20} />
                       </div>
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6]">Direct Inquiry</p>
                         <p className="font-bold text-[#1d1d1f]">strategy@apex-digital.com</p>
                       </div>
                     </div>
+                    <div className="flex items-center gap-4 p-4 rounded-2xl border border-[#dadce0] hover:border-[#1a73e8] transition-colors group">
+                      <div className="w-10 h-10 rounded-xl bg-[#f8faff] flex items-center justify-center text-[#1a73e8] group-hover:bg-[#1a73e8] group-hover:text-white transition-colors">
+                        <MessageCircle size={20} />
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6]">Average Response</p>
+                        <p className="font-bold text-[#1d1d1f]">Under 2 Hours</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-6 pt-4">
+                    <div className="flex -space-x-2">
+                      {[1, 2, 3, 4].map((i) => (
+                        <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-[#e8eaed] flex items-center justify-center overflow-hidden">
+                          <User size={16} className="text-[#9aa0a6]" />
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-xs text-[#70757a] font-medium">Joined by <span className="text-[#1d1d1f] font-bold">500+</span> agencies worldwide</p>
                   </div>
                 </div>
 
-                <div className="bg-white p-12 rounded-[3rem] border border-[#0000000d] shadow-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.05)]">
-                  <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] ml-2">Full Name</label>
-                      <input type="text" className="w-full bg-[#f8f9fa] border border-[#f1f3f4] rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-[#4285f433] transition-all font-medium" placeholder="John Doe" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] ml-2">Work Email</label>
-                      <input type="email" className="w-full bg-[#f8f9fa] border border-[#f1f3f4] rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-[#4285f433] transition-all font-medium" placeholder="john@enterprise.com" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] ml-2">Strategic Objective</label>
-                      <textarea className="w-full bg-[#f8f9fa] border border-[#f1f3f4] rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-[#4285f433] transition-all font-medium h-32" placeholder="Tell us about your growth goals..." />
-                    </div>
-                    <button className="w-full py-5 bg-[#1a73e8] text-white rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-[#1765cc] transition-all shadow-[0_10px_15px_-3px_rgba(66,133,244,0.2)]">
-                      Request Consultation
-                    </button>
-                  </form>
+                <div className="relative">
+                  <div className="absolute -inset-4 bg-gradient-to-tr from-[#4285f41a] to-[#34a8531a] blur-3xl rounded-[4rem] -z-10" />
+                  <div className="bg-white p-10 rounded-[2.5rem] border border-[#dadce0] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.08)]">
+                    <form className="space-y-5" onSubmit={(e) => {
+                      e.preventDefault();
+                      setToast({ message: 'Consultation request sent! We will be in touch shortly.', type: 'success' });
+                    }}>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] ml-1">First Name</label>
+                          <input required type="text" className="w-full bg-[#f8f9fa] border border-[#dadce0] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#1a73e833] focus:border-[#1a73e8] transition-all text-sm font-medium" placeholder="John" />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] ml-1">Last Name</label>
+                          <input required type="text" className="w-full bg-[#f8f9fa] border border-[#dadce0] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#1a73e833] focus:border-[#1a73e8] transition-all text-sm font-medium" placeholder="Doe" />
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] ml-1">Work Email</label>
+                        <input required type="email" className="w-full bg-[#f8f9fa] border border-[#dadce0] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#1a73e833] focus:border-[#1a73e8] transition-all text-sm font-medium" placeholder="john@enterprise.com" />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] ml-1">Strategic Objective</label>
+                        <textarea required className="w-full bg-[#f8f9fa] border border-[#dadce0] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#1a73e833] focus:border-[#1a73e8] transition-all text-sm font-medium h-28 resize-none" placeholder="Tell us about your growth goals..." />
+                      </div>
+                      <button type="submit" className="group w-full py-4 bg-[#1a73e8] text-white rounded-xl font-bold uppercase text-[11px] tracking-[0.2em] hover:bg-[#1765cc] transition-all shadow-lg shadow-[#1a73e833] flex items-center justify-center gap-2">
+                        Request Consultation
+                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      </button>
+                      <p className="text-[10px] text-center text-[#9aa0a6] pt-2">
+                        By submitting, you agree to our <span className="underline cursor-pointer">Privacy Policy</span>.
+                      </p>
+                    </form>
+                  </div>
                 </div>
               </div>
             </motion.div>
