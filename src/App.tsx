@@ -5,7 +5,7 @@ import Markdown from 'react-markdown';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend, Cell, RadialBarChart, RadialBar } from 'recharts';
 import { analyzeWebsite, getWebsiteSuggestions, generateReportSection } from './services/geminiService';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { domToCanvas } from 'modern-screenshot';
 
 interface ChartData {
   kpis: { 
@@ -262,13 +262,11 @@ export default function App() {
 
     try {
       const filename = `Strategic-Audit-${analyzedUrl?.replace(/[^a-z0-9]/gi, '-')}.pdf`;
-      const canvas = await html2canvas(reportRef.current, {
+      const canvas = await domToCanvas(reportRef.current, {
         scale: 2,
-        useCORS: true,
-        logging: false,
         backgroundColor: '#ffffff',
-        windowWidth: reportRef.current.scrollWidth,
-        windowHeight: reportRef.current.scrollHeight
+        width: reportRef.current.scrollWidth,
+        height: reportRef.current.scrollHeight
       });
       
       const imgData = canvas.toDataURL('image/png');
@@ -330,13 +328,11 @@ export default function App() {
       const filename = `Strategic-Audit-${analyzedUrl?.replace(/[^a-z0-9]/gi, '-')}`;
 
       if (format === 'pdf') {
-        const canvas = await html2canvas(reportRef.current, {
+        const canvas = await domToCanvas(reportRef.current, {
           scale: 2,
-          useCORS: true,
-          logging: false,
           backgroundColor: '#ffffff',
-          windowWidth: reportRef.current.scrollWidth,
-          windowHeight: reportRef.current.scrollHeight
+          width: reportRef.current.scrollWidth,
+          height: reportRef.current.scrollHeight
         });
         
         const imgData = canvas.toDataURL('image/png');
@@ -387,7 +383,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] font-sans selection:bg-blue-100 antialiased">
+                <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] font-sans selection:bg-[#ebf2fe] antialiased">
       {/* Navigation */}
       <nav className="sticky top-0 z-[100] bg-white border-b border-[#dadce0] px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -449,18 +445,18 @@ export default function App() {
       </nav>
 
       {isWhiteLabel && (
-        <div className="bg-blue-50 border-b border-blue-100 px-6 py-3">
+        <div className="bg-[#f8faff] border-b border-[#ebf2fe] px-6 py-3">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <span className="text-xs font-bold text-blue-600 uppercase tracking-widest">Agency Branding:</span>
+              <span className="text-xs font-bold text-[#1a73e8] uppercase tracking-widest">Agency Branding:</span>
               <input 
                 type="text" 
                 value={agencyName} 
                 onChange={(e) => setAgencyName(e.target.value)}
-                className="bg-white border border-blue-200 rounded-lg px-3 py-1 text-sm font-medium text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                className="bg-white border border-[#d2e3fc] rounded-lg px-3 py-1 text-sm font-medium text-[#124491] focus:outline-none focus:ring-2 focus:ring-[#4285f433]"
               />
             </div>
-            <p className="text-xs text-blue-400 font-medium italic">Changes will reflect in the PDF export and UI header.</p>
+            <p className="text-xs text-[#669df6] font-medium italic">Changes will reflect in the PDF export and UI header.</p>
           </div>
         </div>
       )}
@@ -534,9 +530,9 @@ export default function App() {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-3xl shadow-2xl overflow-hidden z-50"
+                          className="absolute top-full left-0 right-0 mt-2 bg-white border border-[#e8eaed] rounded-3xl shadow-2xl overflow-hidden z-50"
                         >
-                          <div className="p-4 border-b border-gray-50 bg-gray-50/50 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                          <div className="p-4 border-b border-[#f8f9fa] bg-[#f8f9fa] text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6]">
                             Suggested Websites
                           </div>
                           <div className="max-h-[300px] overflow-y-auto">
@@ -548,13 +544,13 @@ export default function App() {
                                   setUrl(s.url);
                                   handleAnalyze(s.url);
                                 }}
-                                className="w-full px-6 py-4 text-left hover:bg-gray-50 flex items-center justify-between group transition-colors"
+                                className="w-full px-6 py-4 text-left hover:bg-[#f8f9fa] flex items-center justify-between group transition-colors"
                               >
                                 <div>
-                                  <div className="font-bold text-[#1d1d1f] group-hover:text-blue-600 transition-colors">{s.title}</div>
-                                  <div className="text-xs text-gray-400 font-medium">{s.url}</div>
+                                  <div className="font-bold text-[#1d1d1f] group-hover:text-[#1a73e8] transition-colors">{s.title}</div>
+                                  <div className="text-xs text-[#9aa0a6] font-medium">{s.url}</div>
                                 </div>
-                                <ExternalLink size={14} className="text-gray-300 group-hover:text-blue-500 transition-colors" />
+                                <ExternalLink size={14} className="text-[#bdc1c6] group-hover:text-[#4285f4] transition-colors" />
                               </button>
                             ))}
                           </div>
@@ -570,7 +566,7 @@ export default function App() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="p-8 rounded-3xl bg-red-50 border border-red-100 text-red-600 flex items-start gap-4 mb-12 shadow-sm"
+                  className="p-8 rounded-3xl bg-[#fef2f2] border border-[#fee2e2] text-[#dc2626] flex items-start gap-4 mb-12 shadow-sm"
                 >
                   <AlertCircle className="shrink-0 mt-1" />
                   <div>
@@ -603,7 +599,7 @@ export default function App() {
                     
                     <div className="space-y-4 max-w-md">
                       <h3 className="text-2xl font-medium text-[#202124]">Analyzing Digital Footprint</h3>
-                      <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-1.5 w-full bg-[#f1f3f4] rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: "0%" }}
                           animate={{ width: "100%" }}
@@ -627,11 +623,11 @@ export default function App() {
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 opacity-40 grayscale pointer-events-none">
                     <div className="lg:col-span-2 space-y-10">
-                      <div className="h-[700px] rounded-[3rem] bg-white border border-black/5 shadow-sm" />
+                      <div className="h-[700px] rounded-[3rem] bg-white border border-[#0000000d] shadow-sm" />
                     </div>
                     <div className="space-y-10">
-                      <div className="h-[350px] rounded-[3rem] bg-white border border-black/5 shadow-sm" />
-                      <div className="h-[350px] rounded-[3rem] bg-white border border-black/5 shadow-sm" />
+                      <div className="h-[350px] rounded-[3rem] bg-white border border-[#0000000d] shadow-sm" />
+                      <div className="h-[350px] rounded-[3rem] bg-white border border-[#0000000d] shadow-sm" />
                     </div>
                   </div>
                 </div>
@@ -716,8 +712,8 @@ export default function App() {
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                     
                     {/* Score & Market Authority (Top Row) */}
-                    <div className="lg:col-span-8 bg-gradient-to-br from-white to-blue-50/30 border border-blue-100 rounded-[3rem] p-12 text-[#202124] shadow-xl shadow-blue-500/5 relative overflow-hidden group">
-                      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 blur-[120px] rounded-full -mr-20 -mt-20 group-hover:bg-blue-500/15 transition-all duration-700" />
+                    <div className="lg:col-span-8 bg-white border border-[#ebf2fe] rounded-[3rem] p-12 text-[#202124] shadow-[0_20px_25px_-5px_rgba(66,133,244,0.05)] relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 w-96 h-96 bg-[#1a73e80d] rounded-full -mr-20 -mt-20 group-hover:bg-[#1a73e81a] transition-all duration-700" />
                       <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
                         <div className="relative w-56 h-56 flex items-center justify-center">
                           <svg className="w-full h-full transform -rotate-90">
@@ -745,7 +741,7 @@ export default function App() {
                           </div>
                         </div>
                         <div className="flex-1 space-y-6 text-center md:text-left">
-                          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-blue-100 shadow-sm">
+                          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-[#ebf2fe] shadow-sm">
                             <ShieldCheck size={16} className="text-[#1a73e8]" />
                             <span className="text-[11px] font-bold uppercase tracking-widest text-[#1a73e8]">Market Readiness Index</span>
                           </div>
@@ -778,7 +774,7 @@ export default function App() {
                     </div>
 
                     <div className="lg:col-span-4 grid grid-rows-2 gap-10">
-                      <div className="bg-white border border-black/5 rounded-[3rem] p-10 shadow-sm flex flex-col items-center justify-center text-center space-y-4">
+                      <div className="bg-white border border-[#0000000d] rounded-[3rem] p-10 shadow-sm flex flex-col items-center justify-center text-center space-y-4">
                         <div className="w-full h-32 relative">
                           <ResponsiveContainer width="100%" height="100%">
                             <RadialBarChart cx="50%" cy="50%" innerRadius="60%" outerRadius="100%" barSize={10} data={[{ name: 'Authority', value: chartData.marketAuthority, fill: '#0071e3' }]} startAngle={180} endAngle={0}>
@@ -787,51 +783,51 @@ export default function App() {
                           </ResponsiveContainer>
                           <div className="absolute inset-0 flex flex-col items-center justify-end pb-2">
                             <span className="text-3xl font-bold text-[#1d1d1f]">{chartData.marketAuthority}%</span>
-                            <span className="text-[8px] font-bold uppercase tracking-widest text-gray-400">Market Authority</span>
+                            <span className="text-[8px] font-bold uppercase tracking-widest text-[#9aa0a6]">Market Authority</span>
                           </div>
                         </div>
                       </div>
 
-                      <div className="bg-white border border-black/5 rounded-[3rem] p-10 shadow-sm flex flex-col justify-center space-y-2">
-                        <div className="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+                      <div className="bg-white border border-[#0000000d] rounded-[3rem] p-10 shadow-sm flex flex-col justify-center space-y-2">
+                        <div className="w-10 h-10 rounded-xl bg-[#fef2f2] text-[#dc2626] flex items-center justify-center">
                           <Zap size={20} />
                         </div>
-                        <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Annual Revenue Leakage</h3>
-                        <p className="text-3xl font-bold text-red-600 tracking-tight">-${chartData.revenueLeak.annualLoss.toLocaleString()}</p>
-                        <p className="text-[10px] text-gray-500 font-medium leading-relaxed line-clamp-2">{chartData.revenueLeak.reason}</p>
+                        <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6]">Annual Revenue Leakage</h3>
+                        <p className="text-3xl font-bold text-[#dc2626] tracking-tight">-${chartData.revenueLeak.annualLoss.toLocaleString()}</p>
+                        <p className="text-[10px] text-[#70757a] font-medium leading-relaxed line-clamp-2">{chartData.revenueLeak.reason}</p>
                       </div>
                     </div>
 
                     {/* Main Content & ROI Simulator (Middle Row) */}
                     <div className="lg:col-span-8 space-y-10">
-                      <div className="bg-white border border-black/5 rounded-[3rem] p-12 shadow-sm">
-                        <div className="markdown-body prose prose-slate max-w-none prose-headings:tracking-tight prose-headings:font-bold prose-headings:text-[#1d1d1f] prose-p:text-gray-600 prose-p:text-lg prose-p:leading-relaxed prose-li:text-gray-600 prose-li:text-lg">
+                      <div className="bg-white border border-[#0000000d] rounded-[3rem] p-12 shadow-sm">
+                        <div className="markdown-body max-w-none">
                           <Markdown>{markdownContent}</Markdown>
                         </div>
                       </div>
 
                       {/* Strategic Deep Dive */}
                       {chartData.deepDive && (
-                        <div className="bg-white border border-black/5 rounded-[3rem] p-12 shadow-sm relative overflow-hidden">
-                          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-[80px] rounded-full -mr-32 -mt-32" />
+                        <div className="bg-white border border-[#0000000d] rounded-[3rem] p-12 shadow-sm relative overflow-hidden">
+                          <div className="absolute top-0 right-0 w-64 h-64 bg-[#4285f40d] rounded-full -mr-32 -mt-32" />
                           <div className="relative z-10">
                             <div className="flex items-center gap-4 mb-8">
-                              <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/20">
+                              <div className="w-12 h-12 rounded-2xl bg-[#1a73e8] text-white flex items-center justify-center shadow-[0_10px_15px_-3px_rgba(66,133,244,0.2)]">
                                 <Zap size={24} />
                               </div>
                               <h3 className="text-2xl font-bold tracking-tight text-[#1d1d1f]">{chartData.deepDive.title}</h3>
                             </div>
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                               <div className="lg:col-span-2">
-                                <p className="text-gray-600 text-lg leading-relaxed font-medium">
+                                <p className="text-[#5f6368] text-lg leading-relaxed font-medium">
                                   {chartData.deepDive.content}
                                 </p>
                               </div>
                               <div className="space-y-6">
                                 {chartData.deepDive.metrics.map((m, i) => (
-                                  <div key={i} className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
-                                    <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">{m.label}</p>
-                                    <p className="text-2xl font-bold text-blue-600 tracking-tight">{m.value}</p>
+                                  <div key={i} className="p-6 rounded-2xl bg-[#f8f9fa] border border-[#f1f3f4]">
+                                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] mb-1">{m.label}</p>
+                                    <p className="text-2xl font-bold text-[#1a73e8] tracking-tight">{m.value}</p>
                                   </div>
                                 ))}
                               </div>
@@ -841,29 +837,29 @@ export default function App() {
                       )}
 
                       {/* Trends Chart */}
-                      <div className="bg-white border border-black/5 rounded-[3rem] p-12 shadow-sm">
+                      <div className="bg-white border border-[#0000000d] rounded-[3rem] p-12 shadow-sm">
                         <div className="flex items-center justify-between mb-10">
                           <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                            <div className="w-12 h-12 rounded-2xl bg-[#f8faff] text-[#1a73e8] flex items-center justify-center">
                               <TrendingUp size={24} />
                             </div>
                             <div>
                               <h3 className="text-xl font-bold text-[#1d1d1f]">Performance Trends</h3>
-                              <p className="text-sm text-gray-500 font-medium">6-Month historical & projected trajectory</p>
+                              <p className="text-sm text-[#70757a] font-medium">6-Month historical & projected trajectory</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-6">
                             <div className="flex items-center gap-2">
                               <div className="w-3 h-3 rounded-full bg-[#1a73e8]" />
-                              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Traffic</span>
+                              <span className="text-xs font-bold text-[#70757a] uppercase tracking-widest">Traffic</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <div className="w-3 h-3 rounded-full bg-[#34a853]" />
-                              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Conversions</span>
+                              <span className="text-xs font-bold text-[#70757a] uppercase tracking-widest">Conversions</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <div className="w-3 h-3 rounded-full bg-[#fbbc05]" />
-                              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Impressions</span>
+                              <span className="text-xs font-bold text-[#70757a] uppercase tracking-widest">Impressions</span>
                             </div>
                           </div>
                         </div>
@@ -884,32 +880,32 @@ export default function App() {
                             </LineChart>
                           </ResponsiveContainer>
                         </div>
-                        <div className="mt-8 p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                          <p className="text-sm text-gray-600 leading-relaxed italic">
+                        <div className="mt-8 p-6 bg-[#f8f9fa] rounded-2xl border border-[#f1f3f4]">
+                          <p className="text-sm text-[#5f6368] leading-relaxed italic">
                             <span className="font-bold text-[#1d1d1f] not-italic">Strategic Insight:</span> {chartData.trendInsights}
                           </p>
                         </div>
                       </div>
 
                       {/* ROI Simulator */}
-                      <div className="bg-gradient-to-br from-white to-blue-50/20 border border-blue-100 rounded-[3rem] p-12 text-[#202124] shadow-xl shadow-blue-500/5 relative overflow-hidden">
-                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 blur-[80px] rounded-full -ml-32 -mb-32" />
+                      <div className="bg-gradient-to-br from-white to-[#f8faff] border border-[#ebf2fe] rounded-[3rem] p-12 text-[#202124] shadow-[0_20px_25px_-5px_rgba(66,133,244,0.05)] relative overflow-hidden">
+                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#1a73e80d] rounded-full -ml-32 -mb-32" />
                         <div className="relative z-10">
                           <div className="flex flex-col md:flex-row items-center justify-between gap-10 mb-12">
                             <div className="space-y-4">
-                              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
+                              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f8faff] text-[#1a73e8] border border-[#ebf2fe]">
                                 <Zap size={14} />
                                 <span className="text-[10px] font-bold uppercase tracking-widest">Interactive ROI Simulator</span>
                               </div>
                               <h3 className="text-4xl font-bold tracking-tight text-[#1d1d1f]">Projected Growth Impact</h3>
-                              <p className="text-gray-500 text-lg font-medium max-w-md">Adjust the optimization intensity to see how strategic improvements impact your bottom line.</p>
+                              <p className="text-[#70757a] text-lg font-medium max-w-md">Adjust the optimization intensity to see how strategic improvements impact your bottom line.</p>
                             </div>
-                            <div className="bg-white p-8 rounded-[2.5rem] border border-blue-100 text-center min-w-[280px] shadow-lg shadow-blue-500/5">
-                              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Projected Annual Revenue Lift</p>
+                            <div className="bg-white p-8 rounded-[2.5rem] border border-[#ebf2fe] text-center min-w-[280px] shadow-[0_10px_15px_-3px_rgba(66,133,244,0.05)]">
+                              <p className="text-[10px] font-bold text-[#9aa0a6] uppercase tracking-widest mb-3">Projected Annual Revenue Lift</p>
                               <p className="text-5xl font-bold text-[#1a73e8] tracking-tighter">
                                 +${Math.round((chartData.roiSimulation.projected - chartData.roiSimulation.baseline) * roiMultiplier).toLocaleString()}
                               </p>
-                              <div className="mt-4 flex items-center justify-center gap-2 text-green-600 font-bold text-sm">
+                              <div className="mt-4 flex items-center justify-center gap-2 text-[#1e8e3e] font-bold text-sm">
                                 <TrendingUp size={16} />
                                 <span>{Math.round(((chartData.roiSimulation.projected * roiMultiplier) / chartData.roiSimulation.baseline - 1) * 100)}% Growth</span>
                               </div>
@@ -918,15 +914,15 @@ export default function App() {
                           <div className="space-y-10">
                             <div className="space-y-6">
                               <div className="flex justify-between items-center">
-                                <span className="text-sm font-bold uppercase tracking-widest text-gray-500">Optimization Intensity</span>
-                                <div className="px-4 py-1.5 rounded-full bg-blue-600 text-white text-sm font-bold">
+                                <span className="text-sm font-bold uppercase tracking-widest text-[#70757a]">Optimization Intensity</span>
+                                <div className="px-4 py-1.5 rounded-full bg-[#1a73e8] text-white text-sm font-bold">
                                   {Math.round(roiMultiplier * 100)}%
                                 </div>
                               </div>
                               <div className="relative h-4 flex items-center">
-                                <div className="absolute inset-0 bg-gray-100 rounded-full" />
+                                <div className="absolute inset-0 bg-[#f1f3f4] rounded-full" />
                                 <div 
-                                  className="absolute inset-y-0 left-0 bg-blue-600 rounded-full"
+                                  className="absolute inset-y-0 left-0 bg-[#1a73e8] rounded-full"
                                   style={{ width: `${((roiMultiplier - 0.5) / 1.5) * 100}%` }}
                                 />
                                 <input 
@@ -939,22 +935,22 @@ export default function App() {
                                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                                 />
                                 <div 
-                                  className="absolute w-8 h-8 bg-white border-4 border-blue-600 rounded-full shadow-lg pointer-events-none"
+                                  className="absolute w-8 h-8 bg-white border-4 border-[#1a73e8] rounded-full shadow-lg pointer-events-none"
                                   style={{ left: `calc(${((roiMultiplier - 0.5) / 1.5) * 100}% - 16px)` }}
                                 />
                               </div>
-                              <div className="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                              <div className="flex justify-between text-[10px] font-bold text-[#9aa0a6] uppercase tracking-widest">
                                 <span>Conservative</span>
                                 <span>Aggressive Dominance</span>
                               </div>
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                               {chartData.roiSimulation.factors.map((factor, i) => (
-                                <div key={i} className="flex items-center gap-3 bg-white/60 backdrop-blur-sm px-6 py-4 rounded-2xl border border-blue-50 shadow-sm hover:border-blue-200 transition-colors">
-                                  <div className="w-6 h-6 rounded-full bg-green-50 text-green-600 flex items-center justify-center">
+                                <div key={i} className="flex items-center gap-3 bg-[#ffffff99] px-6 py-4 rounded-2xl border border-[#f8faff] shadow-sm hover:border-[#d2e3fc] transition-colors">
+                                  <div className="w-6 h-6 rounded-full bg-[#f0fdf4] text-[#1e8e3e] flex items-center justify-center">
                                     <Check size={14} />
                                   </div>
-                                  <span className="text-sm font-bold text-gray-700">{factor}</span>
+                                  <span className="text-sm font-bold text-[#3c4043]">{factor}</span>
                                 </div>
                               ))}
                             </div>
@@ -966,9 +962,9 @@ export default function App() {
                     {/* Sidebar Visuals (Charts & Roadmap) */}
                     <div className="lg:col-span-4 space-y-10">
                       {/* KPI Benchmarks */}
-                      <div className="bg-white border border-black/5 rounded-[3rem] p-10 shadow-sm">
+                      <div className="bg-white border border-[#0000000d] rounded-[3rem] p-10 shadow-sm">
                         <div className="flex items-center gap-4 mb-10">
-                          <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                          <div className="w-10 h-10 rounded-xl bg-[#f8faff] text-[#1a73e8] flex items-center justify-center">
                             <BarChart3 size={20} />
                           </div>
                           <h3 className="text-sm font-bold uppercase tracking-widest text-[#1d1d1f]">KPI Benchmarks</h3>
@@ -979,14 +975,14 @@ export default function App() {
                               <div className="flex justify-between items-end">
                                 <div className="max-w-[70%]">
                                   <h4 className="font-bold text-[#1d1d1f] text-sm">{kpi.name}</h4>
-                                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-tight">{kpi.explanation}</p>
+                                  <p className="text-[10px] text-[#9aa0a6] font-bold uppercase tracking-widest leading-tight">{kpi.explanation}</p>
                                 </div>
                                 <div className="text-right">
                                   <span className="text-lg font-bold text-[#1a73e8]">{kpi.current}</span>
-                                  <span className="text-[10px] text-gray-400 font-bold"> / {kpi.target}</span>
+                                  <span className="text-[10px] text-[#9aa0a6] font-bold"> / {kpi.target}</span>
                                 </div>
                               </div>
-                              <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                              <div className="h-2 w-full bg-[#f1f3f4] rounded-full overflow-hidden">
                                 <motion.div 
                                   initial={{ width: 0 }}
                                   whileInView={{ width: `${Math.min(100, (kpi.current / kpi.target) * 100)}%` }}
@@ -995,7 +991,7 @@ export default function App() {
                                 />
                               </div>
                               {kpi.calculation && (
-                                <p className="text-[9px] text-gray-400 italic leading-tight opacity-0 group-hover:opacity-100 transition-opacity">
+                                <p className="text-[9px] text-[#9aa0a6] italic leading-tight opacity-0 group-hover:opacity-100 transition-opacity">
                                   <span className="font-bold not-italic">Methodology:</span> {kpi.calculation}
                                 </p>
                               )}
@@ -1005,16 +1001,16 @@ export default function App() {
                       </div>
 
                       {/* Competitor Battle Card */}
-                      <div className="bg-white border border-black/5 rounded-[3rem] p-10 shadow-sm">
+                      <div className="bg-white border border-[#0000000d] rounded-[3rem] p-10 shadow-sm">
                         <div className="flex items-center gap-4 mb-8">
-                          <div className="w-10 h-10 rounded-xl bg-gray-50 text-gray-600 flex items-center justify-center">
+                          <div className="w-10 h-10 rounded-xl bg-[#f8f9fa] text-[#70757a] flex items-center justify-center">
                             <Globe size={20} />
                           </div>
                           <h3 className="text-sm font-bold uppercase tracking-widest text-[#1d1d1f]">Competitor Battle Card</h3>
                         </div>
                         <div className="space-y-6">
                           {chartData.competitors.map((comp, i) => (
-                            <div key={i} className="p-5 rounded-2xl bg-gray-50 border border-gray-100 group hover:bg-white hover:shadow-lg hover:shadow-black/5 transition-all">
+                            <div key={i} className="p-5 rounded-2xl bg-[#f8f9fa] border border-[#f1f3f4] group hover:bg-white hover:shadow-[0_10px_15px_-3px_rgba(0,0,0,0.05)] transition-all">
                               <div className="flex justify-between items-center mb-2">
                                 <div className="flex flex-col">
                                   <span className="font-bold text-[#1d1d1f]">{comp.name}</span>
@@ -1023,43 +1019,43 @@ export default function App() {
                                       href={comp.url} 
                                       target="_blank" 
                                       rel="noopener noreferrer" 
-                                      className="text-[10px] text-blue-600 hover:underline flex items-center gap-1"
+                                      className="text-[10px] text-[#1a73e8] hover:underline flex items-center gap-1"
                                     >
                                       {new URL(comp.url).hostname} <ExternalLink size={8} />
                                     </a>
                                   )}
                                 </div>
-                                <span className={`text-xs font-bold px-2 py-1 rounded-md ${comp.score > growthScore! ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}`}>
+                                <span className={`text-xs font-bold px-2 py-1 rounded-md ${comp.score > growthScore! ? 'bg-[#fef2f2] text-[#dc2626]' : 'bg-[#f0fdf4] text-[#16a34a]'}`}>
                                   {comp.score}%
                                 </span>
                               </div>
-                              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2">Strategic Gap</p>
-                              <p className="text-sm text-gray-600 font-medium">{comp.gap}</p>
+                              <p className="text-xs text-[#9aa0a6] font-bold uppercase tracking-widest mb-2">Strategic Gap</p>
+                              <p className="text-sm text-[#5f6368] font-medium">{comp.gap}</p>
                             </div>
                           ))}
                         </div>
                       </div>
 
                       {/* 90-Day Roadmap */}
-                      <div className="bg-white border border-black/5 rounded-[3rem] p-10 shadow-sm">
+                      <div className="bg-white border border-[#0000000d] rounded-[3rem] p-10 shadow-sm">
                         <div className="flex items-center gap-4 mb-8">
-                          <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                          <div className="w-10 h-10 rounded-xl bg-[#f8faff] text-[#1a73e8] flex items-center justify-center">
                             <TrendingUp size={20} />
                           </div>
                           <h3 className="text-sm font-bold uppercase tracking-widest text-[#1d1d1f]">90-Day Roadmap</h3>
                         </div>
-                        <div className="space-y-8 relative before:absolute before:left-[19px] before:top-2 before:bottom-2 before:w-px before:bg-gray-100">
+                        <div className="space-y-8 relative before:absolute before:left-[19px] before:top-2 before:bottom-2 before:w-px before:bg-[#f1f3f4]">
                           {chartData.roadmap.map((step, i) => (
                             <div key={i} className="relative pl-12">
-                              <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-white border-2 border-blue-600 flex items-center justify-center z-10">
-                                <span className="text-xs font-bold text-blue-600">{i + 1}</span>
+                              <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-white border-2 border-[#1a73e8] flex items-center justify-center z-10">
+                                <span className="text-xs font-bold text-[#1a73e8]">{i + 1}</span>
                               </div>
                               <h4 className="font-bold text-sm text-[#1d1d1f] mb-1">{step.phase}</h4>
-                              <p className="text-xs text-blue-600 font-bold uppercase tracking-widest mb-3">{step.impact}</p>
+                              <p className="text-xs text-[#1a73e8] font-bold uppercase tracking-widest mb-3">{step.impact}</p>
                               <ul className="space-y-1">
                                 {step.tasks.map((task, j) => (
-                                  <li key={j} className="text-xs text-gray-500 font-medium flex items-center gap-2">
-                                    <div className="w-1 h-1 rounded-full bg-gray-300" />
+                                  <li key={j} className="text-xs text-[#70757a] font-medium flex items-center gap-2">
+                                    <div className="w-1 h-1 rounded-full bg-[#bdc1c6]" />
                                     {task}
                                   </li>
                                 ))}
@@ -1081,16 +1077,16 @@ export default function App() {
                     className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8"
                   >
                     {[
-                      { icon: <Layout className="text-blue-600" />, title: "Visual DNA", desc: "We analyze aesthetic resonance and conversion architecture." },
-                      { icon: <SearchCheck className="text-blue-600" />, title: "Authority Audit", desc: "Deep-dive into SEO moats and keyword dominance." },
-                      { icon: <Zap className="text-blue-600" />, title: "Velocity Check", desc: "Technical performance impact on user retention." }
+                      { icon: <Layout className="text-[#1a73e8]" />, title: "Visual DNA", desc: "We analyze aesthetic resonance and conversion architecture." },
+                      { icon: <SearchCheck className="text-[#1a73e8]" />, title: "Authority Audit", desc: "Deep-dive into SEO moats and keyword dominance." },
+                      { icon: <Zap className="text-[#1a73e8]" />, title: "Velocity Check", desc: "Technical performance impact on user retention." }
                     ].map((item, i) => (
-                      <div key={i} className="bg-white p-10 rounded-[2.5rem] border border-black/5 shadow-sm hover:shadow-xl hover:shadow-black/5 transition-all group">
-                        <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                      <div key={i} className="bg-white p-10 rounded-[2.5rem] border border-[#0000000d] shadow-sm hover:shadow-xl hover:shadow-[0_20px_25px_-5px_rgba(0,0,0,0.05)] transition-all group">
+                        <div className="w-14 h-14 rounded-2xl bg-[#f8faff] flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                           {item.icon}
                         </div>
                         <h3 className="text-xl font-bold mb-4 text-[#1d1d1f] tracking-tight">{item.title}</h3>
-                        <p className="text-gray-500 leading-relaxed font-medium">{item.desc}</p>
+                        <p className="text-[#70757a] leading-relaxed font-medium">{item.desc}</p>
                       </div>
                     ))}
                   </motion.div>
@@ -1104,7 +1100,7 @@ export default function App() {
                   >
                     <div className="text-center mb-16">
                       <h2 className="text-4xl font-bold tracking-tight text-[#1d1d1f] mb-4">Trusted by Industry Leaders</h2>
-                      <p className="text-xl text-gray-500 font-medium">See why top executives rely on Apex Digital Strategy.</p>
+                      <p className="text-xl text-[#70757a] font-medium">See why top executives rely on Apex Digital Strategy.</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                       {[
@@ -1127,23 +1123,23 @@ export default function App() {
                           rating: 5
                         }
                       ].map((review, i) => (
-                        <div key={i} className="bg-white p-10 rounded-[3rem] border border-black/5 shadow-sm relative overflow-hidden group">
+                        <div key={i} className="bg-white p-10 rounded-[3rem] border border-[#0000000d] shadow-sm relative overflow-hidden group">
                           <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity">
                             <Quote size={80} />
                           </div>
                           <div className="flex gap-1 mb-6">
                             {[...Array(review.rating)].map((_, i) => (
-                              <Star key={i} size={16} className="fill-blue-600 text-blue-600" />
+                              <Star key={i} size={16} className="fill-[#1a73e8] text-[#1a73e8]" />
                             ))}
                           </div>
-                          <p className="text-lg text-gray-600 font-medium leading-relaxed mb-8 italic">"{review.text}"</p>
+                          <p className="text-lg text-[#5f6368] font-medium leading-relaxed mb-8 italic">"{review.text}"</p>
                           <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
+                            <div className="w-12 h-12 rounded-full bg-[#f1f3f4] flex items-center justify-center text-[#9aa0a6]">
                               <User size={24} />
                             </div>
                             <div>
                               <p className="font-bold text-[#1d1d1f]">{review.name}</p>
-                              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">{review.role}</p>
+                              <p className="text-xs text-[#9aa0a6] font-bold uppercase tracking-widest">{review.role}</p>
                             </div>
                           </div>
                         </div>
@@ -1165,7 +1161,7 @@ export default function App() {
             >
               <div className="text-center mb-20">
                 <h2 className="text-5xl font-bold tracking-tight text-[#1d1d1f] mb-6">Our Methodology</h2>
-                <p className="text-xl text-gray-500 font-medium leading-relaxed">
+                <p className="text-xl text-[#70757a] font-medium leading-relaxed">
                   We employ a multi-vector strategic audit that combines high-level business intelligence with deep technical scrutiny.
                 </p>
               </div>
@@ -1175,31 +1171,31 @@ export default function App() {
                   {
                     title: "Technical Scrutiny",
                     desc: "We analyze the underlying architecture, from server response times to DOM complexity, ensuring your foundation can support rapid growth.",
-                    icon: <Zap className="text-blue-600" />
+                    icon: <Zap className="text-[#1a73e8]" />
                   },
                   {
                     title: "Semantic Authority",
                     desc: "Our AI models evaluate your content's topical depth and relevance against market leaders to identify authority gaps.",
-                    icon: <SearchCheck className="text-blue-600" />
+                    icon: <SearchCheck className="text-[#1a73e8]" />
                   },
                   {
                     title: "UX Psychology",
                     desc: "We audit the user journey through the lens of behavioral economics, identifying friction points that hinder conversion.",
-                    icon: <Layout className="text-blue-600" />
+                    icon: <Layout className="text-[#1a73e8]" />
                   },
                   {
                     title: "Market Positioning",
                     desc: "By benchmarking against competitors, we define your unique value proposition and identify untapped market segments.",
-                    icon: <TrendingUp className="text-blue-600" />
+                    icon: <TrendingUp className="text-[#1a73e8]" />
                   }
                 ].map((item, i) => (
-                  <div key={i} className="bg-white p-10 rounded-[3rem] border border-black/5 shadow-sm flex gap-8 items-start">
-                    <div className="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center shrink-0">
+                  <div key={i} className="bg-white p-10 rounded-[3rem] border border-[#0000000d] shadow-sm flex gap-8 items-start">
+                    <div className="w-16 h-16 rounded-2xl bg-[#f8faff] flex items-center justify-center shrink-0">
                       {item.icon}
                     </div>
                     <div>
                       <h3 className="text-2xl font-bold text-[#1d1d1f] mb-3">{item.title}</h3>
-                      <p className="text-gray-500 text-lg leading-relaxed font-medium">{item.desc}</p>
+                      <p className="text-[#70757a] text-lg leading-relaxed font-medium">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -1216,7 +1212,7 @@ export default function App() {
             >
               <div className="text-center mb-20">
                 <h2 className="text-5xl font-bold tracking-tight text-[#1d1d1f] mb-6">Case Studies</h2>
-                <p className="text-xl text-gray-500 font-medium">Real results for industry-leading enterprises.</p>
+                <p className="text-xl text-[#70757a] font-medium">Real results for industry-leading enterprises.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -1240,22 +1236,22 @@ export default function App() {
                     tags: ["Enterprise", "Performance", "Retention"]
                   }
                 ].map((item, i) => (
-                  <div key={i} className="bg-white rounded-[3rem] border border-black/5 overflow-hidden shadow-sm group hover:shadow-2xl hover:shadow-black/5 transition-all">
-                    <div className="h-48 bg-gray-100 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-indigo-700 opacity-10 group-hover:opacity-20 transition-opacity" />
+                  <div key={i} className="bg-white rounded-[3rem] border border-[#0000000d] overflow-hidden shadow-sm group hover:shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.05)] transition-all">
+                    <div className="h-48 bg-[#f1f3f4] relative overflow-hidden">
+                      <div className="absolute inset-0 bg-[#1a73e81a] group-hover:opacity-20 transition-opacity" />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-4xl font-bold text-blue-600/20">{item.client}</span>
+                        <span className="text-4xl font-bold text-[#1a73e833]">{item.client}</span>
                       </div>
                     </div>
                     <div className="p-10">
                       <div className="flex justify-between items-start mb-6">
                         <h3 className="text-2xl font-bold text-[#1d1d1f]">{item.client}</h3>
-                        <span className="text-blue-600 font-bold text-lg">{item.impact}</span>
+                        <span className="text-[#1a73e8] font-bold text-lg">{item.impact}</span>
                       </div>
-                      <p className="text-gray-500 font-medium leading-relaxed mb-8">{item.desc}</p>
+                      <p className="text-[#70757a] font-medium leading-relaxed mb-8">{item.desc}</p>
                       <div className="flex flex-wrap gap-2">
                         {item.tags.map((tag, j) => (
-                          <span key={j} className="px-3 py-1 rounded-full bg-gray-50 border border-gray-100 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                          <span key={j} className="px-3 py-1 rounded-full bg-[#f8f9fa] border border-[#f1f3f4] text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6]">
                             {tag}
                           </span>
                         ))}
@@ -1277,7 +1273,7 @@ export default function App() {
             >
               <div className="google-card p-12">
                 <h2 className="text-4xl font-medium mb-8 text-[#202124]">About Website Analyzer</h2>
-                <div className="prose prose-slate max-w-none text-[#3c4043]">
+                <div className="markdown-body max-w-none text-[#3c4043]">
                   <p className="text-lg mb-6">
                     Website Analyzer is a next-generation strategic audit platform designed to help businesses and agencies unlock their full digital potential. By combining advanced AI analysis with industry-standard growth frameworks, we provide actionable insights that go beyond simple technical metrics.
                   </p>
@@ -1317,48 +1313,48 @@ export default function App() {
             >
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
                 <div className="space-y-10">
-                  <h2 className="text-5xl font-bold tracking-tight text-[#1d1d1f]">Let's engineer your <span className="text-blue-600">dominance.</span></h2>
-                  <p className="text-xl text-gray-500 font-medium leading-relaxed">
+                  <h2 className="text-5xl font-bold tracking-tight text-[#1d1d1f]">Let's engineer your <span className="text-[#1a73e8]">dominance.</span></h2>
+                  <p className="text-xl text-[#70757a] font-medium leading-relaxed">
                     Ready to take the next step? Our senior consultants are standing by to discuss your custom growth roadmap.
                   </p>
                   
                   <div className="space-y-6 pt-10">
                     <div className="flex items-center gap-5">
-                      <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                      <div className="w-12 h-12 rounded-xl bg-[#f8faff] flex items-center justify-center text-[#1a73e8]">
                         <Globe size={24} />
                       </div>
                       <div>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Global Headquarters</p>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6]">Global Headquarters</p>
                         <p className="font-bold text-[#1d1d1f]">One Infinite Loop, Cupertino, CA</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-5">
-                      <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                      <div className="w-12 h-12 rounded-xl bg-[#f8faff] flex items-center justify-center text-[#1a73e8]">
                         <Briefcase size={24} />
                       </div>
                       <div>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Direct Inquiry</p>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6]">Direct Inquiry</p>
                         <p className="font-bold text-[#1d1d1f]">strategy@apex-digital.com</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white p-12 rounded-[3rem] border border-black/5 shadow-2xl shadow-black/5">
+                <div className="bg-white p-12 rounded-[3rem] border border-[#0000000d] shadow-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.05)]">
                   <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-2">Full Name</label>
-                      <input type="text" className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-blue-500/20 transition-all font-medium" placeholder="John Doe" />
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] ml-2">Full Name</label>
+                      <input type="text" className="w-full bg-[#f8f9fa] border border-[#f1f3f4] rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-[#4285f433] transition-all font-medium" placeholder="John Doe" />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-2">Work Email</label>
-                      <input type="email" className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-blue-500/20 transition-all font-medium" placeholder="john@enterprise.com" />
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] ml-2">Work Email</label>
+                      <input type="email" className="w-full bg-[#f8f9fa] border border-[#f1f3f4] rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-[#4285f433] transition-all font-medium" placeholder="john@enterprise.com" />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-2">Strategic Objective</label>
-                      <textarea className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-blue-500/20 transition-all font-medium h-32" placeholder="Tell us about your growth goals..." />
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] ml-2">Strategic Objective</label>
+                      <textarea className="w-full bg-[#f8f9fa] border border-[#f1f3f4] rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-[#4285f433] transition-all font-medium h-32" placeholder="Tell us about your growth goals..." />
                     </div>
-                    <button className="w-full py-5 bg-blue-600 text-white rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20">
+                    <button className="w-full py-5 bg-[#1a73e8] text-white rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-[#1765cc] transition-all shadow-[0_10px_15px_-3px_rgba(66,133,244,0.2)]">
                       Request Consultation
                     </button>
                   </form>
@@ -1369,8 +1365,8 @@ export default function App() {
         </AnimatePresence>
       </main>
 
-      <footer className="border-t border-black/5 py-16 px-6 text-center bg-white">
-        <p className="text-gray-400 text-[11px] font-bold uppercase tracking-[0.4em]">
+      <footer className="border-t border-[#0000000d] py-16 px-6 text-center bg-white">
+        <p className="text-[#9aa0a6] text-[11px] font-bold uppercase tracking-[0.4em]">
           Apex Digital Strategy © 2026
         </p>
       </footer>
@@ -1382,7 +1378,7 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-10 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-10 bg-[#00000099] backdrop-blur-sm"
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
@@ -1390,9 +1386,9 @@ export default function App() {
               exit={{ scale: 0.9, y: 20 }}
               className="bg-white w-full max-w-5xl h-full max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col"
             >
-              <div className="p-8 border-b border-gray-100 flex items-center justify-between bg-[#f8f9fa]">
+              <div className="p-8 border-b border-[#f1f3f4] flex items-center justify-between bg-[#f8f9fa]">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-[#1a73e8] text-white flex items-center justify-center shadow-lg shadow-blue-500/20">
+                  <div className="w-12 h-12 rounded-2xl bg-[#1a73e8] text-white flex items-center justify-center shadow-[0_10px_15px_-3px_rgba(66,133,244,0.2)]">
                     <Briefcase size={24} />
                   </div>
                   <div>
@@ -1404,21 +1400,21 @@ export default function App() {
                   <button 
                     onClick={handleWebShare}
                     disabled={isExporting}
-                    className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#1a73e8] text-white hover:bg-[#1765cc] transition-all text-sm font-bold shadow-lg shadow-blue-500/20 disabled:opacity-50"
+                    className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#1a73e8] text-white hover:bg-[#1765cc] transition-all text-sm font-bold shadow-[0_10px_15px_-3px_rgba(66,133,244,0.2)] disabled:opacity-50"
                   >
                     {isExporting ? <Loader2 size={18} className="animate-spin" /> : <Share2 size={18} />}
                     {isExporting ? 'Preparing PDF...' : 'Share PDF'}
                   </button>
                   <button 
                     onClick={() => handleShare('copy')}
-                    className="flex items-center gap-2 px-6 py-3 rounded-2xl border border-gray-200 hover:bg-gray-50 transition-colors text-sm font-bold text-gray-600"
+                    className="flex items-center gap-2 px-6 py-3 rounded-2xl border border-[#e8eaed] hover:bg-[#f8f9fa] transition-colors text-sm font-bold text-[#5f6368]"
                   >
                     <Copy size={18} />
                     Copy Link
                   </button>
                   <button 
                     onClick={() => setShowDetailedReport(false)}
-                    className="p-3 rounded-2xl hover:bg-gray-100 text-gray-400 transition-colors"
+                    className="p-3 rounded-2xl hover:bg-[#f1f3f4] text-[#9aa0a6] transition-colors"
                   >
                     <Zap size={24} className="rotate-45" />
                   </button>
@@ -1429,27 +1425,27 @@ export default function App() {
                 <div className="max-w-3xl mx-auto space-y-16">
                   {/* Agency Header */}
                   <div className="text-center space-y-4">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#f8faff] text-[#1a73e8] border border-[#ebf2fe]">
                       <ShieldCheck size={14} />
                       <span className="text-[10px] font-bold uppercase tracking-widest">Confidential Strategic Deliverable</span>
                     </div>
                     <h1 className="text-5xl font-bold tracking-tight text-[#1d1d1f]">Market Dominance Roadmap</h1>
-                    <p className="text-xl text-gray-500 font-medium">A multi-dimensional analysis of digital performance and competitive positioning.</p>
+                    <p className="text-xl text-[#70757a] font-medium">A multi-dimensional analysis of digital performance and competitive positioning.</p>
                     
                     {isGeneratingFullReport && (
-                      <div className="mt-8 p-6 bg-blue-50 rounded-3xl border border-blue-100 flex flex-col items-center gap-4">
-                        <div className="flex items-center gap-3 text-blue-600 font-bold">
+                      <div className="mt-8 p-6 bg-[#f8faff] rounded-3xl border border-[#ebf2fe] flex flex-col items-center gap-4">
+                        <div className="flex items-center gap-3 text-[#1a73e8] font-bold">
                           <Loader2 className="animate-spin" size={20} />
                           <span>Generating: {currentGeneratingSection}</span>
                         </div>
-                        <div className="w-full h-2 bg-blue-200 rounded-full overflow-hidden">
+                        <div className="w-full h-2 bg-[#d2e3fc] rounded-full overflow-hidden">
                           <motion.div 
-                            className="h-full bg-blue-600"
+                            className="h-full bg-[#1a73e8]"
                             initial={{ width: 0 }}
                             animate={{ width: `${(fullReportSections.length / 10) * 100}%` }}
                           />
                         </div>
-                        <p className="text-xs text-blue-500 font-medium italic">Building a comprehensive 10-page dossier. This takes a few moments to ensure world-class quality.</p>
+                        <p className="text-xs text-[#4285f4] font-medium italic">Building a comprehensive 10-page dossier. This takes a few moments to ensure world-class quality.</p>
                       </div>
                     )}
                   </div>
@@ -1458,14 +1454,14 @@ export default function App() {
                   <div className="space-y-12">
                     {fullReportSections.length > 0 ? (
                       fullReportSections.map((section, idx) => (
-                        <section key={idx} className="space-y-6 pt-12 border-t border-gray-100 first:border-t-0 first:pt-0">
+                        <section key={idx} className="space-y-6 pt-12 border-t border-[#f1f3f4] first:border-t-0 first:pt-0">
                           <div className="flex items-center gap-4 mb-4">
-                            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                            <div className="w-10 h-10 rounded-xl bg-[#f8faff] text-[#1a73e8] flex items-center justify-center font-bold">
                               {idx + 1}
                             </div>
                             <h3 className="text-3xl font-bold text-[#1d1d1f] tracking-tight">{section.title}</h3>
                           </div>
-                          <div className="prose prose-slate max-w-none text-gray-600 text-lg leading-relaxed markdown-body">
+                          <div className="markdown-body max-w-none text-[#70757a] text-lg leading-relaxed">
                             <Markdown>{section.content}</Markdown>
                           </div>
                         </section>
@@ -1473,43 +1469,43 @@ export default function App() {
                     ) : (
                       <section className="space-y-6">
                         <h3 className="text-2xl font-bold text-[#1d1d1f] flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                          <div className="w-8 h-8 rounded-lg bg-[#f8faff] text-[#1a73e8] flex items-center justify-center">
                             <Search size={18} />
                           </div>
                           Executive Strategic Overview
                         </h3>
-                        <div className="prose prose-slate max-w-none text-gray-600 text-lg leading-relaxed">
+                        <div className="markdown-body max-w-none text-[#70757a] text-lg leading-relaxed">
                           <Markdown>{chartData.detailedAnalysis || "Analysis pending..."}</Markdown>
                         </div>
                       </section>
                     )}
 
                     <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div className="p-8 rounded-[2rem] bg-gray-50 border border-gray-100 space-y-4">
+                      <div className="p-8 rounded-[2rem] bg-[#f8f9fa] border border-[#f1f3f4] space-y-4">
                         <h4 className="font-bold text-[#1d1d1f] flex items-center gap-2">
-                          <TrendingUp size={18} className="text-green-600" />
+                          <TrendingUp size={18} className="text-[#16a34a]" />
                           Growth Opportunities
                         </h4>
                         <ul className="space-y-3">
                           {chartData.roadmap[0].tasks.map((task, i) => (
-                            <li key={i} className="flex items-start gap-3 text-sm text-gray-600 font-medium">
-                              <CheckCircle2 size={16} className="text-green-500 mt-0.5 shrink-0" />
+                            <li key={i} className="flex items-start gap-3 text-sm text-[#70757a] font-medium">
+                              <CheckCircle2 size={16} className="text-[#22c55e] mt-0.5 shrink-0" />
                               {task}
                             </li>
                           ))}
                         </ul>
                       </div>
-                      <div className="p-8 rounded-[2rem] bg-gray-50 border border-gray-100 space-y-4">
+                      <div className="p-8 rounded-[2rem] bg-[#f8f9fa] border border-[#f1f3f4] space-y-4">
                         <h4 className="font-bold text-[#1d1d1f] flex items-center gap-2">
-                          <AlertCircle size={18} className="text-red-600" />
+                          <AlertCircle size={18} className="text-[#dc2626]" />
                           Critical Vulnerabilities
                         </h4>
-                        <p className="text-sm text-gray-600 font-medium leading-relaxed">
+                        <p className="text-sm text-[#70757a] font-medium leading-relaxed">
                           {chartData.revenueLeak.reason}
                         </p>
-                        <div className="pt-4 border-t border-gray-200">
-                          <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Estimated Impact</p>
-                          <p className="text-2xl font-bold text-red-600">-${chartData.revenueLeak.annualLoss.toLocaleString()}/year</p>
+                        <div className="pt-4 border-t border-[#e8eaed]">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] mb-1">Estimated Impact</p>
+                          <p className="text-2xl font-bold text-[#dc2626]">-${chartData.revenueLeak.annualLoss.toLocaleString()}/year</p>
                         </div>
                       </div>
                     </section>
@@ -1518,20 +1514,20 @@ export default function App() {
                       <h3 className="text-2xl font-bold text-[#1d1d1f]">Industry Benchmark Comparison</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {chartData.kpis.map((kpi, i) => (
-                          <div key={i} className="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                            <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">{kpi.name}</p>
+                          <div key={i} className="p-6 rounded-2xl bg-white border border-[#f1f3f4] shadow-sm hover:shadow-md transition-shadow">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-[#9aa0a6] mb-2">{kpi.name}</p>
                             <div className="flex items-baseline gap-2">
                               <span className="text-3xl font-bold text-[#1d1d1f]">{kpi.current}</span>
-                              <span className="text-sm font-bold text-blue-600">/ {kpi.target}</span>
+                              <span className="text-sm font-bold text-[#1a73e8]">/ {kpi.target}</span>
                             </div>
-                            <div className="mt-4 h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                            <div className="mt-4 h-1.5 w-full bg-[#f1f3f4] rounded-full overflow-hidden">
                               <div 
-                                className="h-full bg-blue-600 rounded-full transition-all duration-1000"
+                                className="h-full bg-[#1a73e8] rounded-full transition-all duration-1000"
                                 style={{ width: `${Math.min(100, (kpi.current / kpi.target) * 100)}%` }}
                               />
                             </div>
                             {kpi.explanation && (
-                              <p className="mt-4 text-[10px] text-gray-500 font-medium leading-relaxed italic">
+                              <p className="mt-4 text-[10px] text-[#70757a] font-medium leading-relaxed italic">
                                 {kpi.explanation}
                               </p>
                             )}
@@ -1543,8 +1539,8 @@ export default function App() {
 
                   <div className="p-10 rounded-[3rem] bg-[#1d1d1f] text-white text-center space-y-6">
                     <h3 className="text-3xl font-bold tracking-tight">Ready to execute this roadmap?</h3>
-                    <p className="text-gray-400 max-w-xl mx-auto">Our team of specialists is ready to help you implement these strategic recommendations and capture the projected ROI.</p>
-                    <button className="google-button-primary bg-white text-[#1d1d1f] hover:bg-gray-100 px-10 py-4 text-lg">
+                    <p className="text-[#9aa0a6] max-w-xl mx-auto">Our team of specialists is ready to help you implement these strategic recommendations and capture the projected ROI.</p>
+                    <button className="google-button-primary bg-white text-[#1d1d1f] hover:bg-[#f1f3f4] px-10 py-4 text-lg">
                       Schedule Strategy Session
                     </button>
                   </div>
@@ -1561,7 +1557,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
             className={`fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full shadow-2xl z-[100] flex items-center gap-3 ${
-              toast.type === 'success' ? 'bg-[#1a73e8] text-white' : 'bg-red-600 text-white'
+              toast.type === 'success' ? 'bg-[#1a73e8] text-white' : 'bg-[#dc2626] text-white'
             }`}
           >
             {toast.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
