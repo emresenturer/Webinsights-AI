@@ -51,7 +51,7 @@ export default function App() {
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [roiMultiplier, setRoiMultiplier] = useState(1);
   const [isWhiteLabel, setIsWhiteLabel] = useState(false);
-  const [agencyName, setAgencyName] = useState('Apex Digital Strategy');
+  const [agencyName, setAgencyName] = useState('Your Agency');
   const [activeTab, setActiveTab] = useState<'audit' | 'methodology' | 'cases' | 'about' | 'contact'>('audit');
   const [showDetailedReport, setShowDetailedReport] = useState(false);
   const [fullReportSections, setFullReportSections] = useState<{title: string, content: string}[]>([]);
@@ -1091,61 +1091,6 @@ export default function App() {
                     ))}
                   </motion.div>
 
-                  {/* Customer Reviews Section */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mt-40 mb-20"
-                  >
-                    <div className="text-center mb-16">
-                      <h2 className="text-4xl font-bold tracking-tight text-[#1d1d1f] mb-4">Trusted by Industry Leaders</h2>
-                      <p className="text-xl text-[#70757a] font-medium">See why top executives rely on Apex Digital Strategy.</p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                      {[
-                        {
-                          name: "Sarah Chen",
-                          role: "CMO, TechFlow Systems",
-                          text: "The Strategic Growth Audit was a game-changer. We identified a 22% conversion leak in our checkout process within minutes.",
-                          rating: 5
-                        },
-                        {
-                          name: "Marcus Thorne",
-                          role: "Founder, E-com Dominance",
-                          text: "Finally, an audit tool that speaks the language of business, not just code. The KPI benchmarks are incredibly accurate.",
-                          rating: 5
-                        },
-                        {
-                          name: "Elena Rodriguez",
-                          role: "Product Lead, SaaSify",
-                          text: "The depth of analysis is staggering. It's like having a senior consultant on demand. The PDF reports are board-room ready.",
-                          rating: 5
-                        }
-                      ].map((review, i) => (
-                        <div key={i} className="bg-white p-10 rounded-[3rem] border border-[#0000000d] shadow-sm relative overflow-hidden group">
-                          <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity">
-                            <Quote size={80} />
-                          </div>
-                          <div className="flex gap-1 mb-6">
-                            {[...Array(review.rating)].map((_, i) => (
-                              <Star key={i} size={16} className="fill-[#1a73e8] text-[#1a73e8]" />
-                            ))}
-                          </div>
-                          <p className="text-lg text-[#5f6368] font-medium leading-relaxed mb-8 italic">"{review.text}"</p>
-                          <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-[#f1f3f4] flex items-center justify-center text-[#9aa0a6]">
-                              <User size={24} />
-                            </div>
-                            <div>
-                              <p className="font-bold text-[#1d1d1f]">{review.name}</p>
-                              <p className="text-xs text-[#9aa0a6] font-bold uppercase tracking-widest">{review.role}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
                 </>
               )}
             </motion.div>
@@ -1433,7 +1378,7 @@ export default function App() {
 
       <footer className="border-t border-[#0000000d] py-16 px-6 text-center bg-white">
         <p className="text-[#9aa0a6] text-[11px] font-bold uppercase tracking-[0.4em]">
-          Apex Digital Strategy © 2026
+          WebInsights AI © 2026 · Built by Emre Senturer
         </p>
       </footer>
 

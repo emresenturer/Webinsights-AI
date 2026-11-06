@@ -1,7 +1,10 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.GEMINI_API_KEY;
-const ai = new GoogleGenAI({ apiKey: apiKey || "" });
+import { getApiKey } from "../lib/apiKey";
+
+const ai = new Proxy({} as GoogleGenAI, {
+  get: (_t, prop) => (new GoogleGenAI({ apiKey: getApiKey() }) as any)[prop],
+});
 
 export async function researchCompetitors() {
   const prompt = `Research the top website analysis tools (like SEMrush, Ahrefs, PageSpeed Insights, GTmetrix, SimilarWeb). 
