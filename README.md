@@ -1,20 +1,30 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# WebInsights AI
 
-# Run and deploy your AI Studio app
+Strategic website audit tool. Enter a site and get a structured analysis of design, SEO, content and performance, with prioritized recommendations and a white-label, board-ready PDF report.
 
-This contains everything you need to run your app locally.
+**Live:** [emresenturer.github.io/Webinsights-AI](https://emresenturer.github.io/Webinsights-AI/)
 
-View your app in AI Studio: https://ai.studio/apps/166885d1-d833-4950-82cb-a5e9324614fa
+## How it works
 
-## Run Locally
+1. Open the live app and paste your own Google Gemini API key (free at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)).
+2. Search for or enter a website.
+3. Review the audit, optionally set your agency name (white label), and export the PDF report.
 
-**Prerequisites:**  Node.js
+Your key is stored only in your browser and sent only to Google's Gemini API. There is no backend.
 
+## Run locally
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm install
+npm run dev        # http://localhost:3000
+```
+
+Optionally put `GEMINI_API_KEY=...` in `.env.local` to skip the key prompt during development.
+
+## Deploy
+
+Every push to `main` builds the app and publishes `dist/` to the `gh-pages` branch (`.github/workflows/pages.yml`).
+
+## Stack
+
+React 19, TypeScript, Vite, Tailwind CSS, Recharts, Gemini API with Google Search grounding. By [Emre Senturer](https://github.com/emresenturer).

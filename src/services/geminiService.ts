@@ -1,11 +1,10 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-const apiKey = process.env.GEMINI_API_KEY;
-if (!apiKey) {
-  console.warn("GEMINI_API_KEY is missing. AI features will not work.");
-}
+import { getApiKey } from "../lib/apiKey";
 
-const ai = new GoogleGenAI({ apiKey: apiKey || "" });
+const ai = new Proxy({} as GoogleGenAI, {
+  get: (_t, prop) => (new GoogleGenAI({ apiKey: getApiKey() }) as any)[prop],
+});
 
 export interface AnalysisResult {
   summary: string;
